@@ -1,17 +1,20 @@
 # circle_plot
 
-### Step 1: For a gentle overview of graph theory terms and visualization,
+## Step 1: A gentle overview of graph theory terms and visualization
 
-see this article: https://medium.com/basecs/a-gentle-introduction-to-graph-theory-77969829ead8
+See this article for conceptual background and terminology before starting: https://medium.com/basecs/a-gentle-introduction-to-graph-theory-77969829ead8
 
-### Step 2. Initial input file setup
+### Step 2. Initial setup
 
-Download this repo. In the demo_data file, there are two sheets:
+Download this repo by clicking on the green "Code" button, then "Download ZIP". In the demo_data file, there are two sheets:
 
 "demo" - This is a matrix of nodes (people, in this example) to be connected in the graph.
+
 "node_attributes" - This is a list of attributes, one for each node, to characterize or describe the nodes. We will this as a lookup table and also for visualization.
 
-The "name" column refers to the node identifier and will be used to label the nodes in the figure. The "research" column is an example but can be changed. You can also add additional attributes. Note that additional attributes here will not automatically be included in the plot - the code will need to be updated to display the new information.
+The "name" column refers to the node identifier and will be used to label the nodes in the figure.
+
+The "research" column is an example but can be changed. You can also add additional attributes. Note that additional attributes here will not automatically be included in the plot - the code will need to be updated to display the new information.
 
 There are two ways to set up the graph input: with R or Excel functions. In this example, we will primarily use R, but some steps can be replicated or replaced in Excel.
 
