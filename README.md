@@ -5,8 +5,6 @@
 See these articles for basic conceptual background and terminology before starting:
 https://sitn.hms.harvard.edu/flash/2021/graph-theory-101/
 
-![Alt text](/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/graph_types.png "Types of graphs. Credit: https://sitn.hms.harvard.edu/flash/2021/graph-theory-101/")
-
 For a bit more detail:
 https://medium.com/basecs/a-gentle-introduction-to-graph-theory-77969829ead8
 Scroll down to the section "Graphs with direction, and graphs without".
@@ -198,4 +196,4 @@ ggraph(graph, layout = "linear", circular = TRUE) +
     )
 ```
 
-![Alt text](/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/graph_figure.jpg "Circular plot of individual and collaborative research")
+![Alt text](/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/graph_figure.jpg)
