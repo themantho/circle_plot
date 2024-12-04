@@ -37,14 +37,11 @@ pacman::p_load(
 )
 ```
 
-Step 4. Set the file path to the demo_data.xlsx file location (i.e., where you downloaded the file on your computer). You will also need to specify the Excel sheet name to load.
 Step 4. Change the file path location for demo_data.xlsx (i.e., where you downloaded the file on your computer). If you change the name of the Excel sheet "demo" or create a new sheet to use, you will need to update the "sheet_name" variable to reflect this change.
 
 ```r
-filepath <- "/Users/manthony1/Downloads/demo_data.xlsx"
 filepath <- "/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/demo_data.xlsx"
 # Specify the name of the excel sheet to read (e.g., 'demo' or 'Sheet1'). The sheet name must be enclosed in quotations. In this example, the first sheet is named "demo".
-sheet_name <- "demo"
 sheet_name <- "demo" # update this name, if you change it in the Excel file
 ```
 
