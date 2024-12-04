@@ -4,7 +4,7 @@
 
 See this article for conceptual background and terminology before starting: https://medium.com/basecs/a-gentle-introduction-to-graph-theory-77969829ead8
 
-### Step 2. Initial setup
+## Step 2. Initial setup
 
 Download this repo by clicking on the green "Code" button, then "Download ZIP". In the demo_data file, there are two sheets:
 
@@ -18,7 +18,7 @@ The "research" column is an example but can be changed. You can also add additio
 
 There are two ways to set up the graph input: with R or Excel functions. In this example, we will primarily use R, but some steps can be replicated or replaced in Excel.
 
-### Step 3. Download R or use an IDE (e.g., Visual Studio Code). Set the current directory to the folder where you downloaded this repo.
+## Step 3. Download R or use an IDE (e.g., Visual Studio Code). Set the current directory to the folder where you downloaded this repo.
 
 Next, install and load the pacman library to assist with installing other libraries, then load the additional libraries with pacman.
 
@@ -43,7 +43,7 @@ pacman::p_load(
 )
 ```
 
-### Step 4. Change the file path location for demo_data.xlsx (i.e., where you downloaded the file on your computer). If you change the name of the Excel sheet "demo" or create a new sheet to use, you will need to update the "sheet_name" variable to reflect this change.
+## Step 4. Change the file path location for demo_data.xlsx (i.e., where you downloaded the file on your computer). If you change the name of the Excel sheet "demo" or create a new sheet to use, you will need to update the "sheet_name" variable to reflect this change.
 
 ```r
 filepath <- "/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/demo_data.xlsx"
@@ -51,7 +51,7 @@ filepath <- "/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/de
 sheet_name <- "demo" # update this name, if you change it in the Excel file
 ```
 
-### Step 5. Load the data in R.
+## Step 5. Load the data in R.
 
 If you receive the error message "Error: Sheet 'demo' not found", there may be unsaved changes in the Excel file. Verify that the Excel sheet name matches the name defined for the sheet_name variable, save the Excel file, then re-run the code chunk.
 
@@ -61,7 +61,7 @@ data <- read_xlsx(filepath, sheet = sheet_name) %>%
     column_to_rownames(var = "Name")
 ```
 
-### Step 6: Load the lookup table.
+## Step 6: Load the lookup table.
 
 We can lookup the type of research each person does (human, animal, cross-species). The sheet called "node_attributes" should be filled in before loading the data and is assumed to be in the same Excel file as the "demo" sheet.
 
@@ -69,7 +69,7 @@ We can lookup the type of research each person does (human, animal, cross-specie
 lookup = read_xlsx(filepath, sheet = "node_attributes")
 ```
 
-### Step 7: Create a graph as a shortcut to extract unique connections.
+## Step 7: Create a graph as a shortcut to extract unique connections.
 
 A list of connections is called an edge list in graph theory. An undirected graph means that the connections do not have directionality (i.e., a->b and b->a are the same direction. The connection is considered bidirectional, so the direction does not matter).
 
@@ -81,7 +81,7 @@ edge_list <- graph.adjacency(as.matrix(data), mode = "undirected", diag = FALSE)
     igraph::as_edgelist()
 ```
 
-### Step 8: Define edge attributes for visualization.
+## Step 8: Define edge attributes for visualization.
 
 Edge attributes are characteristics of the connections between nodes. This example
 
