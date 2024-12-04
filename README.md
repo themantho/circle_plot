@@ -12,9 +12,9 @@ Download this repo by clicking on the green "Code" button, then "Download ZIP". 
 
 "node_attributes" - A list of node attributes or characteristics, one for each node. This will be used as a lookup table and for visualization.
 
-    The "name" column refers to the node identifier and will be used to label the nodes in the figure.
+The "name" column refers to the node identifier and will be used to label the nodes in the figure.
 
-    The "research" column is an example but can be changed. You can also add additional attributes. Note that additional attributes here will not automatically be included in the plot - the code will need to be updated to display the new information.
+The "research" column is an example but can be changed. You can also add additional attributes. Note that additional attributes here will not automatically be included in the plot - the code will need to be updated to display the new information.
 
 There are two ways to set up the graph input: with R or Excel functions. In this example, we will primarily use R, but some steps can be replicated or replaced in Excel.
 
