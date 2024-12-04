@@ -131,7 +131,7 @@ graph <- edge_list %>%
 
 If you receive the error message "object of type 'closure' is not subsettable", re-run the code chunks that define the lookup, edge_attr, and node_attr variables. If any of these code chunks were not run, the below code will not be able to find the variables.
 
-## Define plot parameters for visualization
+## Step 10: Define plot parameters for visualization
 
 ```r
 params <- list(
@@ -150,7 +150,7 @@ params <- list(
 
 NOTE: R sorts edge labels alphabetically. In our example, we want to color code the edge attribute "research collaboration" (e.g., the edges representing human and animal research collaborations are different colors). The research collaboration labels are human, animal, and cross-species. R will alphabetically order these as animal, cross-species, and human. To assign colors to the right collaborations, the order of the hex color codes should match this order: [animal color], [cross-species color], [human color]. If the colors are not assigned to the correct edges, adjust the order of the hex codes in the params list, then rerun the code chunk to define params and replot the figure.
 
-### Plot the graph!
+### Step 11: Plot the graph!
 
 ```r
 ggraph(graph, layout = "linear", circular = TRUE) +
