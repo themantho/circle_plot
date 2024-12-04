@@ -139,9 +139,11 @@ params <- list(
     edge_legend_name = "Research Collaboration", # legend name for the edges
     legend_title_size = 14, # font size of the legend title
     legend_text_size = 13, # font size of the legend text
-    edge_color = c("#fbbc4d", "#94d196", "#7dbeff") # define hex color codes for the edge attribute used in geom_edge_arc color aesthetic. NOTE: R sorts these alphabetically. If the alphabetically ordered values for the edge attribute are Animal, Cross-species, Human, then the order of the hex codes should be [animal color], [cross-species color], [human color]). If the colors are not assigned to the correct edges, the order of the hex codes likely needs to be adjusted.
+    edge_color = c("#fbbc4d", "#94d196", "#7dbeff") # define hex color codes for the edge attribute used in geom_edge_arc color aesthetic. Orange = animal research, green = cross-species research, blue = human research.
 )
 ```
+
+NOTE: R sorts edge labels alphabetically. In our example, we want to color code the edge attribute "research collaboration" (e.g., the edges representing human and animal research collaborations are different colors). The research collaboration labels are human, animal, and cross-species. R will alphabetically order these as animal, cross-species, and human. To assign colors to the right collaborations, the order of the hex color codes should match this order: [animal color], [cross-species color], [human color]. If the colors are not assigned to the correct edges, adjust the order of the hex codes in the params list, then rerun the code chunk to define params and replot the figure.
 
 ### Plot the graph!
 
