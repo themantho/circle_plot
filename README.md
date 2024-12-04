@@ -198,4 +198,4 @@ ggraph(graph, layout = "linear", circular = TRUE) +
     )
 ```
 
-![Alt text](/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/graph_figure.png?raw=true "Circular plot of individual and collaborative research")
+![Alt text](/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/graph_figure.jpg?raw=true "Circular plot of individual and collaborative research")
