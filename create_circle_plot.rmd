@@ -42,7 +42,6 @@ pacman::p_load(
 
 ```{r load data, include=FALSE}
 # Set the filepath to the input dataset
-filepath <- "/Users/manthony1/Downloads/demo_data.xlsx"
 filepath <- "/Users/manthony1/Library/CloudStorage/Box-Box/GitHub/circle_plot/demo_data.xlsx"
 # Specify the name of the excel sheet to read (e.g., 'demo' or 'Sheet1'). The sheet name must be enclosed in quotations.
 # In this example, the first sheet is named "demo".
