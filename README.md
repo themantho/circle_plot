@@ -1,7 +1,5 @@
 # circle_plot
 
-This repo provides an example for creating a circular plot using the ggraph library.
-
 Step 1: For a gentle overview of graph theory terms and visualization, see this article: https://medium.com/basecs/a-gentle-introduction-to-graph-theory-77969829ead8
 
 Step 2. Initial input file setup
