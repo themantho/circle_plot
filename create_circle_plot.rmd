@@ -1,0 +1,166 @@
+---
+title: Create circle plots"
+author: "Mia Anthony"
+date: "2024-10-22"
+last updated: "2024-12-02"
+output: html_document
+---
+
+#### Input file setup
+1. Download the demo_data Excel file. There are two ways to set up the graph input: with R or Excel functions.
+
+##### Using R
+
+
+#### R setup
+First install and load the pacman library to assist with installing other libraries.
+
+# install.packages("pacman")
+# library(pacman)
+
+# Use pacman to install and load the other libraries.
+
+```{r libraries, include=FALSE}
+# Install the pacman library first
+# install.packages("pacman")
+library(pacman)
+pacman::p_load(
+    magrittr,
+    tidyverse,
+    data.table,
+    janitor,
+    stringr,
+    listr,
+    vroom,
+    readr,
+    readxl,
+    igraph,
+    ggraph,
+    sjmisc
+)
+```
+
+```{r load data, include=FALSE}
+# Set the filepath to the input dataset
+filepath <- "/Users/manthony1/Downloads/demo_data.xlsx"
+# Specify the name of the excel sheet to read (e.g., 'demo' or 'Sheet1'). The sheet name must be enclosed in quotations.
+# In this example, the first sheet is named "demo".
+sheet_name <- "demo"
+
+# Load the data. If you receive the error message "Error: Sheet 'demo' not found", check the name of the sheet you are trying to load, save the Excel file, and then re-run the code chunk.
+data <- read_xlsx(filepath, sheet = sheet_name) %>%
+    # Convert the first column to rownames
+    column_to_rownames(var = "Name")
+
+tmp <- data.table::CJ(rownames(data), colnames(data), sorted = FALSE) %>%
+    filter(V1 != V2)
+
+# Create a lookup table to find the type of research each person does (human, animal, cross-species).
+# The Excel sheet called "node_attributes" should be filled in before loading the data.
+# Note: The node_attribute sheet is assumed to be in the same Excel file as the "demo" sheet.
+# If it's not, uncomment the next line and define the filepath for the node_attributes file.
+# filepath = /path/to/node_attributes
+lookup = read_xlsx(filepath, sheet = "node_attributes") # load the lookup table from Excel
+
+# Here we use the igraph library to create a graph object as a shortcut to extract unique connections.
+# A list of connections is called an edge list in graph theory. An undirected graph means that the connections do not have directionality (i.e., a->b and b->a are the same direction. The connection is considered bidirectional, so the direction does not matter).
+# If your graph connections do have directionality, then change the mode to "directed".
+# Keep diag = FALSE - this excludes self-connections and keeps the graph tidy and easier to interpret.
+edge_list <- graph.adjacency(as.matrix(data), mode = "undirected", diag = FALSE) %>%
+    igraph::as_edgelist()
+
+# Define edge attributes for visualization. Edge attributes are characteristics of the connections between nodes.
+edge_attr <- edge_list %>%
+    as_tibble() %>%
+    set_colnames(c("name", "name_y")) %>%
+    # Look up each person's research type in the first column, joining by the variable "name"
+    left_join(lookup, by = "name") %>%
+    # Rename the "name" variable with a placeholder, so that the second column can be labeled "name"
+    rename(name_x = name, name = name_y) %>%
+    # Look up the research type in the second column, joining by the variable "name"
+    left_join(lookup, by = "name") %>%
+    rename(name_y = name) %>%
+    mutate(
+        # Add a variable for research collaboration type (research conducted between pairs of people)
+        research_collab = case_when(
+            # Label human-human collaborations as "human"
+            research.x == "Human" & research.y == "Human" ~ "Human",
+            # Label animal-animal collaborations as "animal"
+            research.x == "Animal" & research.y == "Animal" ~ "Animal",
+            # Label human-animal, animal-human, or cross-species collaborations as "cross-species"
+            research.x == "Human" & research.y == "Animal" ~ "Cross-species",
+            research.x == "Animal" & research.y == "Human" ~ "Cross-species",
+            research.x == "Cross-species" | research.y == "Cross-species" ~ "Cross-species"
+        )
+    )
+```
+
+```{r}
+# Create a graph from the edge list.
+# If you receive the error message "object of type 'closure' is not subsettable", re-run the code chunks that define the lookup, edge_attr, and node_attr variables.
+# If any of these code chunks were not run, the below code will not be able to find the variables.
+graph <- edge_list %>%
+    igraph::graph_from_edgelist(directed = FALSE) %>%
+    # Add individual research as a node attribute
+    set_vertex_attr("research", value = lookup$research) %>%
+    # Add research collaboration as an edge attribute
+    set_edge_attr("research_collab", value = edge_attr$research_collab)
+
+# Define plot parameters for visualization
+params <- list(
+    edge_width = 0.6, # width of the connections (lower = thinner; min limit: 0)
+    edge_alpha = 0.75, # transparency of the edges (lower = more transparent; min-max limits: [0, 1])
+    node_hjust = -0.4, # amount of horizontal offset between the nodes and node labels. A more negative value will increase the amount of leading white space before the labels.
+    node_shape = 21, # shape of the nodes (21 = circle)
+    node_size = 3.25, # size of the nodes (higher = larger radius)
+    font_family = "Arial", # you can use most standard fonts
+    edge_legend_name = "Research Collaboration", # legend name for the edges
+    legend_title_size = 14, # font size of the legend title
+    legend_text_size = 13, # font size of the legend text
+    # node_color = c("#df8d29", "#4cb64f", "#416ae5"),
+    edge_color = c("#fbbc4d", "#94d196", "#7dbeff") # define hex color codes for the edge attribute used in geom_edge_arc color aesthetic (e.g., if the ordered values for the edge attribute are Animal, Cross-species, Human, then the order of the hex codes should be [animal color], [cross-species color], [human color]).
+)
+
+# Plot the graph using the ggraph library
+ggraph(graph, layout = "linear", circular = TRUE) +
+    # Add edges
+    geom_edge_arc(
+        aes(colour = research_collab), # Here the edge attribute "research_collab" is used to color code the connections
+        alpha = params$edge_alpha,
+        strength = params$edge_width
+    ) +
+    # Add nodes
+    geom_node_point(
+        aes(fill = research), # The node attribute research is used to color code the fill color of the nodes
+        shape = params$node_shape,
+        size = params$node_size
+    ) +
+    # Add node labels without a border around the text. To include a border around the text, comment out "geom_node_text(" and uncomment "geom_node_label("
+    geom_node_text(
+        # geom_node_label(
+        aes(
+            label = name,
+            angle = node_angle(x, y)
+        ),
+        hjust = params$node_hjust, repel = FALSE
+    ) +
+    # Add color to the edges
+    scale_edge_color_manual(
+        values = params$edge_color,
+        name = params$edge_legend_name) +
+    # Add a theme to look pretty
+    theme_graph() +
+    # Define the graph coordinates
+    coord_fixed(
+        xlim = c(-1.4, 1.4), ylim = c(-1.4, 1.4)
+    ) +
+    # Format the legend
+    guides(
+        fill = guide_legend("Individual Research") # Format the color fill legend
+    ) +
+    # Global formatting
+    theme(
+        legend.title = element_text(family = params$font_family, size = params$legend_title_size), # Legend title
+        legend.text = element_text(family = params$font_family, size = params$legend_text_size) # Legend text
+    )
+```
