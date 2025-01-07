@@ -87,7 +87,7 @@ edge_list <- graph.adjacency(as.matrix(data), mode = "undirected", diag = FALSE)
 
 ## Step 8: Define edge attributes for visualization
 
-Edge attributes are characteristics of the connections between nodes. This example plots research collaboration type. You can replace research collaboration with a different variable in the last section of this code chunk. Make sure also change the variable name and
+Edge attributes are characteristics of the connections between nodes. This example plots research collaboration type. You can replace research collaboration with a different variable in the last section of this code chunk. Make sure to also change the variable name.
 
 ```r
 edge_attr <- edge_list %>%
@@ -171,9 +171,9 @@ ggraph(graph, layout = "linear", circular = TRUE) +
         # geom_node_label(
         aes(
             label = name,
-            angle = node_angle(x, y)
-        ),
-        hjust = params$node_hjust, repel = FALSE
+            angle = node_angle(x, y),
+            hjust = x < 0)
+        # hjust = params$node_hjust,
     ) +
     # Add color to the edges
     scale_edge_color_manual(
