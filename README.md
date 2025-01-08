@@ -1,5 +1,7 @@
 # circle_plot
 
+This repo provides an R example of a circle plot.
+
 ## Step 1: A gentle overview of graph theory terms and visualization
 
 See these articles for basic conceptual background and terminology before starting:
